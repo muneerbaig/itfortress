@@ -1,0 +1,81 @@
+Day 1
+
+<!--Ubuntu Patch update -->
+sudo apt update
+sudo apt upgrade
+
+
+
+<!--VMware Workstation Tool Installation-->
+sudo apt install open-vm-tools open-vm-tools-desktop
+
+
+
+<!--View Version Number of Ubuntu-->
+lsb_release -a
+
+
+<!--Install the Curl-->
+sudo apt install curl
+
+
+<!--Install the Wazuh Version 12 Standalone Installation-->
+curl -sO https://packages.wazuh.com/4.12/wazuh-install.sh && sudo bash ./wazuh-install.sh -a
+
+
+
+<!--Password Change of Wazuh 12 version-->
+sudo -i
+cd /var/ossec/bin
+curl -so wazuh-passwords-tool.sh https://packages.wazuh.com/4.12/wazuh-passwords-tool.sh
+ls
+bash wazuh-passwords-tool.sh -u admin -p Wazuh123*
+systemctl restart wazuh-manager
+
+
+
+
+<!Static IP address configuration>
+sudo -i
+/etc/sysconfig/network-scripts
+nano ifcfg-eth0
+
+#Modify following parameters
+DEVICE=eth0
+
+ONBOOT=yes
+
+BOOTPROTO=no
+
+TYPE=ETHERNET
+
+NM_CONTROLLED=no
+
+PREFIX=24
+
+IPADDR=XXX.XXX.XXX.XXX
+
+GATEWAY=XXX.XXX.XXX.XXX
+
+DNS1=XXX.XXX.XXX.XXX
+
+DNS2=XXX.XXX.XXX.XXX
+
+systemctl restart network
+
+
+
+
+<--Update Kali Linux Operating System-->
+curl -fsSL https://archive.kali.org/archive-key.asc | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/kali-archive.gpg > /dev/null
+sudo apt update && sudo apt upgrade -y
+
+
+
+
+
+
+
+
+
+

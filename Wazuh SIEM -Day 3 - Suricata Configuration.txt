@@ -1,0 +1,44 @@
+<!--Configure the Lan Interface as Promiscuous Mode in VMware Workstation-->
+ethernet%d.noPromisc = "FALSE"
+(replace %d with the ethernet number)
+
+
+
+
+
+<!--Install the Suricata -->
+sudo apt install suricata
+
+
+
+<!--Verify the suricata configuration-->
+sudo suricata -T -c /etc/suricata/suricata.yaml -v
+sudo suricata -c /etc/suricata/suricata.yaml -i ens33 -v
+
+
+
+
+<!--View Suricata logs-->
+sudo ls /var/log/suricata/
+sudo tail -f /var/log/suricata/suricata.log
+sudo tail -f /var/log/suricata/eve.log
+
+
+
+<!--Suricata Configuration-->
+sudo -i
+nano /var/ossec/etc/ossec.conf
+#Locate policy monitoring and add the following configuration before the policy monitoring
+
+  <!--Suricata Logs -->
+<localfile>
+	<log_format>json</log_format>
+	<location>/var/log/suricata/eve.json</location>
+</localfile>
+
+
+
+
+
+sudo systemctl start suricata
+sudo systemctl start wazuh-agent

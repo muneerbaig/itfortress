@@ -1,0 +1,59 @@
+Day 3
+
+<!-- pfSense Firewall Integration -->
+<remote>
+		<connection>syslog</connection>
+		<port>514</port>
+		<protocol>udp</protocol>
+		<allowed-ips>Pfsense WAN IP/24</allowed-ips>
+		<local_ip>Wazuh IP</local_ip>
+</remote>
+
+
+<!-- add new decoder for pfsense "Filename: pfsense-custom-decoder.xml"-->
+<decoder name="pfsense-custom">
+    <prematch>filterlog</prematch>
+</decoder>
+
+<decoder name="pfsense-fields">
+    <parent>pfsense-custom</parent>
+    <regex>^(\w+)[\d+]: \S*,\S*,\S*,(\S*),\S*,\S*,(\S*),\S*,\S*,\S*,\S*,\S*,\S*,\S*,\S*,\S*,(\S*),\S*,(\S*),(\S*),(\d*),(\d*),\S*</regex>
+    <order>logsource,id,action,protocol,srcip,dstip,srcport,dstport</order>
+</decoder>
+
+
+<!-- add new rule  for pfsense "Filename: pfsense-custom-rules.xml"-->
+
+<group name="pfsense, custom,">
+  <rule id="100900" level="0">
+    <decoded_as>pfsense-custom</decoded_as>
+    <field name="logsource">filterlog</field>
+    <description>pfSense firewall rules grouped.</description>
+  </rule>
+
+  <rule id="100901" level="4">
+    <if_sid>100900</if_sid>
+    <action>pass</action>
+    <options>no_full_log</options>
+    <description>pfSense firewall allow event.</description>
+    <group>firewall_allow,pci_dss_1.4,gpg13_4.12,hipaa_164.312.a.1,nist_800_53_SC.7,tsc_CC6.7,tsc_CC6.8,</group>
+  </rule>    
+
+  <rule id="100902" level="5">
+    <if_sid>100900</if_sid>
+    <action>block</action>
+    <options>no_full_log</options>
+    <description>pfSense firewall drop event.</description>
+    <group>firewall_block,pci_dss_1.4,gpg13_4.12,hipaa_164.312.a.1,nist_800_53_SC.7,tsc_CC6.7,tsc_CC6.8,</group>
+  </rule>
+
+  <rule id="100903" level="10" frequency="18" timeframe="45" ignore="240">
+    <if_matched_sid>100902</if_matched_sid>
+    <same_source_ip />
+    <description>Multiple pfSense firewall blocks events from same source.</description>
+    <mitre>
+      <id>T1110</id>
+    </mitre>
+    <group>multiple_blocks,pci_dss_1.4,pci_dss_10.6.1,gpg13_4.12,hipaa_164.312.a.1,hipaa_164.312.b,nist_800_53_SC.7,nist_800_53_AU.6,tsc_CC6.7,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+  </rule>
+</group>

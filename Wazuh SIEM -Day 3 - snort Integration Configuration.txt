@@ -1,0 +1,30 @@
+<!--Configure the Lan Interface as Promiscuous Mode in VMware Workstation-->
+ethernet%d.noPromisc = "FALSE"
+(replace %d with the ethernet number)
+
+
+
+
+<!--Install the snort service-->
+sudo apt install snort
+
+
+
+<!--Snort Integration-->
+<localfile>
+	<log_format>snort-full</log_format>
+	<location>/var/log/snort/snort.alert.fast</location>
+</localfile>
+
+
+
+
+<!--Test the snort integration-->
+/etc/snort/snort -A console -q -c snort.conf -i ens33
+
+
+
+
+<!--View the logs-->
+sudo tail -f /var/log/snort/snort.log
+

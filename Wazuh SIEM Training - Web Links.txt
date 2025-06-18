@@ -1,0 +1,35 @@
+Links 
+
+Day 1
+
+Stand-alone Wazuh Installation
+https://documentation.wazuh.com/current/quickstart.html
+
+
+Wazuh OVA Download
+https://documentation.wazuh.com/current/deployment-options/virtual-machine/virtual-machine.html
+
+
+Day 2 Download the Universal Wazuh Agent
+https://documentation.wazuh.com/current/installation-guide/wazuh-agent/wazuh-agent-package-windows.html
+
+
+Day 3: Download the Suricata Rules
+https://rules.emergingthreats.net/open/suricata-7.0.3/
+
+
+Day 3: Download the Sysmon utility:
+https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon
+
+
+Day 3: Download the Sysmon configuration utility
+https://github.com/SwiftOnSecurity/sysmon-config
+
+
+Day 3: Download the Eicar malware
+http://www.eicar.org/
+
+
+
+
+

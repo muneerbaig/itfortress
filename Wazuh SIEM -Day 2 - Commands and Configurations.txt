@@ -1,0 +1,137 @@
+Day 2
+
+<!--Create an agent group Linux workstations: -->
+sudo apt update
+sudo apt upgrade
+
+cd /var/ossec/bin
+./agent_groups --help
+
+
+./agent_groups -a -g Linux
+./agent_groups -l
+
+
+
+<!--Install the agent4.9.0-1 version on Windows 11 operating system:-->
+Invoke-WebRequest -Uri https://packages.wazuh.com/4.x/windows/wazuh-agent-4.9.0-1.msi -OutFile $env:tmp\wazuh-agent; msiexec.exe /i $env:tmp\wazuh-agent /q WAZUH_MANAGER='192.168.1.23' WAZUH_AGENT_GROUP='Windows' WAZUH_AGENT_NAME='w11-011'
+
+
+<!--Install the agent4.12 version on Windows 11 operating system:-->
+Invoke-WebRequest -Uri https://packages.wazuh.com/4.x/windows/wazuh-agent-4.12.0-1.msi -OutFile $env:tmp\wazuh-agent; msiexec.exe /i $env:tmp\wazuh-agent /q WAZUH_MANAGER='192.168.1.28' WAZUH_AGENT_GROUP='windows-ws' WAZUH_AGENT_NAME=$host_name 
+
+
+<!--Install the agent on Ubuntu Linux operating system:-->
+wget https://packages.wazuh.com/4.x/apt/pool/main/w/wazuh-agent/wazuh-agent_4.11.1-1_amd64.deb && sudo WAZUH_MANAGER='192.168.1.38' dpkg -i ./wazuh-agent_4.11.1-1_amd64.deb
+sudo systemctl daemon-reload
+sudo systemctl enable wazuh-agent
+sudo systemctl start wazuh-agent
+sudo systemctl status wazuh-agent
+
+
+<!--Show Location of Wazuh Agent Configuration file:-->
+cd /var/ossec/etc
+
+
+<!--View the status of Wazuh services.:-->
+cd /var/ossec/bin
+/wazuh-control status
+
+
+
+<!--Extract an agent key:-->
+cd /var/ossec/bin/manage_agents
+./manage_agents --help
+./manage_agents -l               tell windows 2nd is disconnected
+./manage_agents -e <003>
+
+
+
+
+
+<!--View the status of groups:-->
+cd /var/ossec/bin
+./verify-agent-conf 
+
+
+
+<!--View the Wazuh Agents list:-->
+cd /var/ossec/bin
+./agent_control  -l
+
+
+<!--View the Wazuh Agents list (Only Active) :-->
+cd /var/ossec/bin
+./verify-agent-conf -lc
+
+
+<!--View the Wazuh Agent detail informaiton :-->
+cd /var/ossec/bin
+./agent_control -i 001    # Agent ID here is 001
+
+
+<!--Restart the Wazah agent(s) :-->
+cd /var/ossec/bin
+./agent_control  -R -a #Restart all the nodes
+./agent_control  -r 002  #Restart specific node
+
+<!--Upgrade the Wazah agent(s) :-->
+cd /var/ossec/bin
+./agent_upgrade -a 001
+
+
+
+
+<!--Remove the wazuh agent from ubuntu :-->
+sudo apt-get remove --purge wazuh-agent
+sudo rm -rf /var/ossec
+sudo rm -rf /etc/ossec-init.conf
+sudo rm -rf /etc/systemd/system/wazuh-agent.service
+
+
+
+
+<!--View ubuntu Linux logs location:-->
+cd /var/log
+ls
+
+
+
+<!--View the ubuntu Linux logs :-->
+tail -f /var/log/dpkg.log
+
+
+<!--Install an application in ununtu>
+sudo apt install stegosuite
+
+
+
+<!-- install the ssh service in ubuntu>
+sudo apt install openssh-server
+
+
+
+
+<!--Generate RDP Brute Force Attack using hydra from Kali Linux :-->
+sudo hydra -l win10-victim -p abc12345 rdp://IP          
+Wrong password
+-l = login
+-p = password (abc12345 wrong password)
+rdp = is a protocol for remote desktop
+
+
+<!--Generate SSH Brute Force Attack using hydra from Kali Linux :-->
+sudo hydra -l ubuntu -p abc12345 IP ssh         
+Wrong password
+-l = login
+-p = password (abc12345 wrong password)
+ssh = is a protocol for ssh
+
+
+
+
+
+
+
+
+
