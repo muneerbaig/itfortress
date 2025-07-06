@@ -1,0 +1,47 @@
+View the Linux Scripts:
+sudo -i
+ls /var/ossec/active-response/bin
+
+
+
+<!--RDP Active Response -->
+  <command>
+    <name>netsh</name>
+    <executable>netsh</executable>
+    <timeout_allowed>yes</timeout_allowed>
+  </command>
+
+
+
+#optional..........Did not use
+  <active-response>
+    <disabled>no</disabled>
+    <command>netsh</command>
+    <location>local</location>
+    <rules_id>100100</rules_id>
+  </active-response>
+
+
+
+
+sudo nano /var/ossec/etc/ossec.conf
+# go to the active response section and find the netsh command and under this paste it.
+
+
+  <active-response>
+    <disabled>no</disabled>
+    <command>netsh</command>
+    <location>local</location>
+    <rules_id>100100</rules_id>
+  </active-response>
+
+
+
+<!-- Active Response Rule -->
+<group name="rdp">
+<rule id="100100" level="10" frequency="3" timeframe="120">
+<if_matched_sid>60122</if_matched_sid>
+<description>RDP Bruteforce Attack Detected on IT Fortress Network </description>
+</rule>
+</group>
+

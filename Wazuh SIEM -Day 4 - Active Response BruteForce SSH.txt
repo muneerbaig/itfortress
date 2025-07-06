@@ -1,0 +1,19 @@
+sudo nano /var/ossec/etc/ossec.conf
+
+
+<active-response>
+<command>firewall-drop</command>
+<location>local</location>
+<rules_id>5760</rules_id>
+<timeout>60</timeout>
+</active-response>
+
+
+sudo systemctl restart wazuh-manager
+
+also restart ubuntu client
+
+sudo systemctl restart wazuh-agent
+
+
+

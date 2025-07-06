@@ -1,0 +1,7 @@
+  <!-- VirusTotal Integration -->
+ <integration>
+  <name>virustotal</name>
+   <api_key> ********APIKey**********</api_key>
+   <group>syscheck</group>
+   <alert_format>json</alert_format>
+ </integration>

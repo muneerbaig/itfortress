@@ -1,0 +1,31 @@
+sudo -i
+cd /var/ossec/etc/lists/
+nano malware-hashes
+
+
+
+sudo chmod 750 malware-hashes
+sudo chown wazuh:wazuh malware-hashes
+
+
+nano /var/ossec/etc/ossec.conf
+<list>etc/lists/malware-hashes</list>
+sudo systemctl restart wazuh-manager
+
+
+nano /var/ossec/etc/rules/local_rules.xml
+<!--CDB List For Known Malware Hashes -->
+<group name="malware,">
+  <rule id="110002" level="13">
+    <!-- The if_sid tag references the built-in FIM rules -->
+    <if_sid>554, 550</if_sid>
+    <list field="md5" lookup="match_key">etc/lists/malware-hashes</list>
+    <description>Known Malware hash is detected in IT Fortress System : $(file)</description>
+    <mitre>
+      <id>T1204.002</id>
+    </mitre>
+  </rule>
+</group>
+
+
+sudo systemctl restart wazuh-manager

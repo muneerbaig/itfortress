@@ -1,0 +1,13 @@
+File Integrity Module (FIM):
+
+Monitor Windows Document and Download Directories,
+
+<directories check_all="yes" report_changes="yes" realtime="yes">c:\Users\win10-victim\Downloads</directories>
+<directories check_all="yes" report_changes="yes" realtime="yes">c:\Users\win10-victim\Documents</directories>
+
+
+Monitor Linux Directory:
+
+nano /var/ossec/etc/ossec.conf
+<directories check_all="yes" whodata="yes" report_changes="yes" realtime="yes"> /home/linux01/Downloads</directories><directories check_all="yes" whodata="yes" report_changes="yes" realtime="yes"> /home/linux01/Documents</directories>
+
